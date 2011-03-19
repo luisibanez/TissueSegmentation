@@ -33,7 +33,10 @@ int main(int argc, char * argv[] )
 
   typedef unsigned char                        PixelComponentType;
   typedef itk::RGBPixel<PixelComponentType>    InputPixelType;
-  typedef itk::IdentifierType                  OutputPixelType;
+
+  // Ideally this type should be itk::IdentifierType
+  // but currently ParaView can't read an image of this type in Linux 64 bits.
+  typedef unsigned int                         OutputPixelType;
 
   typedef itk::Image< InputPixelType,  3 >   InputImageType;
   typedef itk::Image< OutputPixelType, 3 >   OutputImageType;
