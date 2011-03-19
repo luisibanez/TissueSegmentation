@@ -21,10 +21,21 @@ ExternalData_Add_Test( UNCTissueData
 ExternalData_Add_Test( UNCTissueData
   NAME Test3
   COMMAND VectorConfidenceConnected
+  DATA{ernou.tor5564m12.tif}
+  ${TEMP}/ernou.tor5564m12_outer.png
+  10
+  10
+  3.0
+  3
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test4
+  COMMAND VectorConfidenceConnected
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen.png
   250
   300
-  3.0
-  3
+  3.5
+  5
   )
