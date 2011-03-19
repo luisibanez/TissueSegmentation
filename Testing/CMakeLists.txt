@@ -17,3 +17,14 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_histogram.mhd
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test3
+  COMMAND VectorConfidenceConnected
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_lumen.png
+  250
+  300
+  3.0
+  3
+  )
