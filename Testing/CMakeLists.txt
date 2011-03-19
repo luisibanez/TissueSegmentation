@@ -39,3 +39,10 @@ ExternalData_Add_Test( UNCTissueData
   3.5
   5
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test5
+  COMMAND ImageClassifier
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_lumen_classified.png
+  )

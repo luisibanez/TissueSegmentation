@@ -6,3 +6,6 @@ target_link_libraries( HistogramInRGBSpace ${ITK_LIBRARIES} )
 
 add_executable( VectorConfidenceConnected  VectorConfidenceConnected.cxx )
 target_link_libraries( VectorConfidenceConnected ${ITK_LIBRARIES} )
+
+add_executable( ImageClassifier  ImageClassifier.cxx )
+target_link_libraries( ImageClassifier ${ITK_LIBRARIES} )
