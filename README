@@ -1,0 +1,11 @@
+This code is copyrighted by the Insight Software Consortium
+and it is distributed under the Apache 2.0 License.
+
+This code is inteded to perform a tissue segmentation from micrographs (24 bit)
+captured with brightfield illumination using a 20x objective.
+
+The driving scenario for this tissue segmentation is the analysis of images
+from seminiferous tubule cross-sections from the UNC Database
+
+http://database.csbio.unc.edu/fertility
+

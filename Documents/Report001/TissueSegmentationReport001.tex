@@ -1,0 +1,171 @@
+\documentclass{InsightArticle}
+
+\usepackage[dvips]{graphicx}
+\usepackage{color}
+\usepackage{listings}
+
+\definecolor{listcomment}{rgb}{0.0,0.5,0.0}
+\definecolor{listkeyword}{rgb}{0.0,0.0,0.5}
+\definecolor{listnumbers}{gray}{0.65}
+\definecolor{listlightgray}{gray}{0.955}
+\definecolor{listwhite}{gray}{1.0}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  hyperref should be the last package to be loaded.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[dvips,
+bookmarks,
+bookmarksopen,
+backref,
+colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
+]{hyperref}
+
+
+\title{Tissue Segmentation in Testis Image Analysis}
+
+
+%
+% NOTE: This is the last number of the "handle" URL that
+% The Insight Journal assigns to your paper as part of the
+% submission process. Please replace the number "1338" with
+% the actual handle number that you get assigned.
+%
+\newcommand{\IJhandlerIDnumber}{3063}
+
+\lstset{frame = tb,
+       framerule = 0.25pt,
+       float,
+       fontadjust,
+       backgroundcolor={\color{listlightgray}},
+       basicstyle = {\ttfamily\footnotesize},
+       keywordstyle = {\ttfamily\color{listkeyword}\textbf},
+       identifierstyle = {\ttfamily},
+       commentstyle = {\ttfamily\color{listcomment}\textit},
+       stringstyle = {\ttfamily},
+       showstringspaces = false,
+       showtabs = false,
+       numbers = left,
+       numbersep = 6pt,
+       numberstyle={\ttfamily\color{listnumbers}},
+       tabsize = 2,
+       language=[ANSI]C++,
+       floatplacement=!h
+       }
+
+\release{1.10}
+
+\author{Luis Ibanez$^{1}$, Wes Turner$^{1}$, Fanny Odet$^{2}$, Deborah O'Brian$^{2}$}
+\authoraddress{$^{1}$Kitware Inc., Clifton Park, NY\\
+               $^{2}$Cell and Developmental Biology Department, UNC, Chapel Hill, NC}
+
+\begin{document}
+
+
+%
+% Add hyperlink to the web location and license of the paper.
+% The argument of this command is the handler identifier given
+% by the Insight Journal to this paper.
+%
+\IJhandlefooter{\IJhandlerIDnumber}
+
+
+\ifpdf
+\else
+   %
+   % Commands for including Graphics when using latex
+   %
+   \DeclareGraphicsExtensions{.eps,.jpg,.gif,.tiff,.bmp,.png}
+   \DeclareGraphicsRule{.jpg}{eps}{.jpg.bb}{`convert #1 eps:-}
+   \DeclareGraphicsRule{.gif}{eps}{.gif.bb}{`convert #1 eps:-}
+   \DeclareGraphicsRule{.tiff}{eps}{.tiff.bb}{`convert #1 eps:-}
+   \DeclareGraphicsRule{.bmp}{eps}{.bmp.bb}{`convert #1 eps:-}
+   \DeclareGraphicsRule{.png}{eps}{.png.bb}{`convert #1 eps:-}
+\fi
+
+
+\maketitle
+
+
+\ifhtml
+\chapter*{Front Matter\label{front}}
+\fi
+
+
+\begin{abstract}
+\noindent
+This document describes a contribution to the Insight Toolkit intended to
+perform tissue segmentation in micrographs from testis cross-sections from
+knockout mice.
+
+This paper is accompanied with the source code, input data, parameters and
+output data that we used for validating the algorithm described in this paper.
+This adheres to the fundamental principle that scientific publications must
+facilitate \textbf{reproducibility} of the reported results.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+
+The Collaborative Cross (CC) is a mammalian reference population designed to
+provide a cross-disciplinary platform for systems genetics that models the
+heterogeneous human population.  Specifically, the CC is a large panel of
+recombinant inbred (RI) mouse lines derived from eight genetically diverse
+founder strains.  RI panels are powerful tools for complex trait analysis
+needed to understand disease susceptibility and progression. More than $70\%$ of
+the initial lines have become extinct during inbreeding, and our initial
+results indicate that $~50\%$ of the extinction cases are due to male
+infertility.  We are using this resource to first identify loci, and eventually
+genes, associated with male infertility and other male reproductive traits.
+Reproductive phenotyping of males from each extinct line is our first step in
+defining the genetic basis of the observed infertility.
+
+Testis histology is an important component of our phenotypic analysis, and is
+also widely used to assess causes of infertility in knockout mice.  In the CC
+project, we already have >900 images of testis cross-sections stained with PAS
+and hematoxylin.  These are composite images generated with MetaMorph software
+from 20-100 color micrographs (24 bit) captured with brightfield illumination
+using a 20x objective. Our initial goals for image analysis are to:
+
+\begin{itemize}
+\item identify seminiferous tubule cross-sections (smaller, mostly spherical or
+oval structures that fill most of the image).  Each tubule is surrounded by a
+magenta border. The epithelium within each tubule has a speckled appearance
+with nuclei (blue/purple to magenta) of various shapes and sizes on a lighter
+pink background.  Most tubules have a clear lumen with no nuclei.  There are
+other cells, blood vessels and spaces between the tubules.
+\item count the tubule cross sections in each image
+\item determine the diameter of each tubule
+\item identify the clear lumen present in the center of most tubules
+\item determine the proportion of each tubule that is filled with cells.
+Either epithelial height or area would be useful, since both are reduced when
+germ cells are prematurely lost during differentiation.
+\end{itemize}
+
+A more automated approach for any of these steps would facilitate the
+collection of quantitative data preferred for genetic analyses.  Our images
+display a broad continuum from normal samples (tubules with a relatively
+uniform diameter and epithelial height) to samples that have lost all
+developing germ cells (smaller tubules with no clear epithelium).  Many of our
+images contain a mixture of normal tubules and abnormal tubules.  I’ve uploaded
+three images to illustrate the variability between samples. Any progress
+towards an automated analysis would help a great deal, even if we can develop a
+routine that correctly identifies a significant fraction of the tubules and can
+be edited by manual identification.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Insert the bibliography using BibTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{plain}
+\bibliography{InsightJournal}
+
+
+\end{document}
