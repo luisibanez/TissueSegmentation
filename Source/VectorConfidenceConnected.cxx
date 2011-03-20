@@ -24,11 +24,11 @@
 
 int main( int argc, char *argv[] )
 {
-  if( argc < 7 )
+  if( argc < 8 )
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage outputImage inputSeedsFile multiplier iterations outputMembershipFunctionFile" << std::endl;
+    std::cerr << " inputImage outputImage inputSeedsFile multiplier iterations radius outputMembershipFunctionFile" << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -99,8 +99,9 @@ int main( int argc, char *argv[] )
 
   inputSeedsFile.close();
 
+  const unsigned int neighborhoodRadius = atoi( argv[6] );
 
-  confidenceConnected->SetInitialNeighborhoodRadius( 2 );
+  confidenceConnected->SetInitialNeighborhoodRadius( neighborhoodRadius );
 
   try
     {
@@ -128,7 +129,7 @@ int main( int argc, char *argv[] )
 
   std::ofstream outputMembership;
 
-  outputMembership.open( argv[6] );
+  outputMembership.open( argv[7] );
 
   for( unsigned int i = 0; i < 3; i++ )
     {

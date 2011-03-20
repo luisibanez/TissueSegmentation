@@ -26,6 +26,7 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_lumen_seeds.txt}
   4.0
   2
+  3
   ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
   )
 
@@ -37,6 +38,7 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_small_lumen_seeds.txt}
   1.5
   3
+  2
   ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
   )
 
@@ -104,6 +106,19 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_small_germ_cells.png
   DATA{ernou.tor5564m12_small_germ_cells_seeds.txt}
   3.5
-  5
+  1
+  2
   ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test13
+  COMMAND VectorConfidenceConnected
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_epithelium.png
+  DATA{ernou.tor5564m12_small_epithelium_seeds.txt}
+  3.5
+  1
+  1
+  ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
   )
