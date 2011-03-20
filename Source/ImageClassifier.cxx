@@ -23,13 +23,15 @@
 #include "itkImageToListSampleAdaptor.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+#include "itkScalarToRGBPixelFunctor.h"
+#include "itkUnaryFunctorImageFilter.h"
 
 int main(int argc, char * argv [] )
 {
   if( argc < 5 )
     {
     std::cerr << "Missing command line arguments: ";
-    std::cerr << argv[0] << "\t" << "InputImage ClassifiedOutputImage inputMembership1 inputMembership2 ..." << std::endl;
+    std::cerr << argv[0] << "\t" << "InputImage ClassifiedOutputImage ColorEncodedClassifiedImage inputMembership1 inputMembership2 ..." << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -37,7 +39,9 @@ int main(int argc, char * argv [] )
   const unsigned int NumberOfComponents = MeasurementVectorSize;
   typedef unsigned char MeasurementComponentType;
 
-  const unsigned int numberOfClasses = argc - 3;
+  const unsigned int numberOfArgumentsBeforeMemberships = 4;
+
+  const unsigned int numberOfClasses = argc - numberOfArgumentsBeforeMemberships;
 
   typedef itk::FixedArray< MeasurementComponentType, MeasurementVectorSize > InputPixelType;
   typedef InputPixelType          MeasurementVectorType;
@@ -107,7 +111,7 @@ int main(int argc, char * argv [] )
 
     std::ifstream inputMembership;
 
-    const unsigned int numberOfArgument = j + 3;
+    const unsigned int numberOfArgument = j + numberOfArgumentsBeforeMemberships;
 
     inputMembership.open( argv[numberOfArgument] );
 
@@ -191,6 +195,45 @@ int main(int argc, char * argv [] )
     {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
+    }
+
+
+  //
+  //  Instantiate the filter that will encode the label image
+  //  into a color image (random color attribution).
+  //
+  typedef itk::RGBPixel<unsigned char>      RGBPixelType;
+
+  typedef itk::Image< RGBPixelType, ImageDimension >  RGBImageType;
+
+  typedef  itk::ImageFileWriter< RGBImageType  >      RGBWriterType;
+
+  RGBWriterType::Pointer colorWriter = RGBWriterType::New();
+
+
+  typedef itk::Functor::ScalarToRGBPixelFunctor< unsigned char > ColorMapFunctorType;
+
+  typedef itk::UnaryFunctorImageFilter<
+                                OutputImageType,
+                                RGBImageType,
+                                ColorMapFunctorType
+                                                > ColorMapFilterType;
+
+  ColorMapFilterType::Pointer colorMapFilter = ColorMapFilterType::New();
+
+  colorMapFilter->SetInput(  filter->GetOutput() );
+
+  colorWriter->SetFileName( argv[3] );
+
+  colorWriter->SetInput( colorMapFilter->GetOutput() );
+
+  try
+    {
+    colorWriter->Update();
+    }
+  catch( itk::ExceptionObject & excep )
+    {
+    std::cerr << excep << std::endl;
     }
 
   return EXIT_SUCCESS;
