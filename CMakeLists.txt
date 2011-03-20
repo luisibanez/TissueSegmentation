@@ -20,8 +20,13 @@ list(APPEND ExternalData_URL_TEMPLATES
 
 include(CTest)
 
+option(BUILD_DOCUMENTS "Build technical reports (need LaTeX)" OFF)
+
 add_subdirectory( Source )
 add_subdirectory( Testing )
-add_subdirectory( Documents )
+
+if( BUILD_DOCUMENTS )
+  add_subdirectory( Documents )
+endif()
 
 ExternalData_Add_Target(UNCTissueData)
