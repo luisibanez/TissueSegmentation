@@ -93,7 +93,6 @@ int main( int argc, char *argv[] )
     {
     seedIndex[0] = static_cast< InputImageType::IndexValueType >( seedX );
     seedIndex[1] = static_cast< InputImageType::IndexValueType >( seedY );
-    std::cout << "Point = " << seedX << " " << seedY << "  Index = " << seedIndex << std::endl;
     confidenceConnected->AddSeed( seedIndex );
     }
 
