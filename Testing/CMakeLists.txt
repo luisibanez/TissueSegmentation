@@ -117,8 +117,8 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_epithelium.png
   DATA{ernou.tor5564m12_small_epithelium_seeds.txt}
-  3.5
-  1
+  1.5
+  2
   1
   ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
   )
@@ -130,5 +130,14 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
   ${TEMP}/ernou.tor5564m12_small_epithelium_Membership_classified.mhd
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test15
+  COMMAND MembershipImageFilter
+  DATA{ernou.tor5564m12.tif}
+  ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_epithelium_Membership_classified.mhd
+  )
+
 
 
