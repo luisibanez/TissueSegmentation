@@ -38,6 +38,7 @@ ExternalData_Add_Test( UNCTissueData
   300
   3.5
   5
+  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
   )
 
 ExternalData_Add_Test( UNCTissueData
@@ -63,4 +64,12 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_small_histogram_residual.mhd
   ${TEMP}/ernou.tor5564m12_small_lumen.png
   1
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test8
+  COMMAND MahalanobisClassifier
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_small_lumen_Mahalanobis_classified.png
   )

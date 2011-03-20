@@ -19,8 +19,7 @@
 #define __itkMahalanobisDistanceImageFilter_h
 
 #include "itkUnaryFunctorImageFilter.h"
-#include "itkConceptChecking.h"
-#include "itkSimpleDataObjectDecorator.h"
+#include "itkMahalanobisDistanceMetric.h"
 
 namespace itk
 {
@@ -36,8 +35,8 @@ class MahalanobisDistance
 {
 public:
   typedef Statistics::MahalanobisDistanceMetric< TInput >   DistanceMetricType;
-  typedef DistanceMetricType::MeanVectorType                MeanVectorType;
-  typedef DistanceMetricType::CovarianceMatrixType          CovarianceMatrixType;
+  typedef typename DistanceMetricType::MeanVectorType       MeanVectorType;
+  typedef typename DistanceMetricType::CovarianceMatrixType CovarianceMatrixType;
 
   MahalanobisDistance()
   {
@@ -79,9 +78,9 @@ public:
   }
 
 private:
-  DistanceMetricType::Pointer   m_DistanceMetric;
-  CovarianceMatrixType          m_Covariance;
-  MeanVectorType                m_Mean;
+  typename DistanceMetricType::Pointer    m_DistanceMetric;
+  CovarianceMatrixType                    m_Covariance;
+  MeanVectorType                          m_Mean;
 };
 }
 
@@ -112,10 +111,10 @@ public:
 
   typedef Functor::MahalanobisDistance<
     typename TInputImage::PixelType,
-    typename TOutputImage::PixelType >              DistanceMetricType;
+    typename TOutputImage::PixelType >                        DistanceMetricType;
 
-  typedef DistanceMetricType::MeanVectorType        MeanVectorType;
-  typedef DistanceMetricType::CovarianceMatrixType  CovarianceMatrixType;
+  typedef typename DistanceMetricType::MeanVectorType         MeanVectorType;
+  typedef typename DistanceMetricType::CovarianceMatrixType   CovarianceMatrixType;
 
 #ifdef ITK_USE_CONCEPT_CHECKING
   /** Begin concept checking */

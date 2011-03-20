@@ -9,3 +9,6 @@ target_link_libraries( VectorConfidenceConnected ${ITK_LIBRARIES} )
 
 add_executable( ImageClassifier  ImageClassifier.cxx )
 target_link_libraries( ImageClassifier ${ITK_LIBRARIES} )
+
+add_executable( MahalanobisClassifier  MahalanobisClassifier.cxx )
+target_link_libraries( MahalanobisClassifier ${ITK_LIBRARIES} )

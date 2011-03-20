@@ -24,11 +24,11 @@
 
 int main( int argc, char *argv[] )
 {
-  if( argc < 7 )
+  if( argc < 8 )
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage outputImage seedX seedY multiplier iterations" << std::endl;
+    std::cerr << " inputImage outputImage seedX seedY multiplier iterations outputMembershipFunctionFile" << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -100,6 +100,28 @@ int main( int argc, char *argv[] )
 
   std::cout << "Covariance matrix = " << std::endl;
   std::cout << covariance << std::endl;
+
+  std::ofstream outputMembership;
+
+  outputMembership.open( argv[7] );
+
+  for( unsigned int i = 0; i < 3; i++ )
+    {
+    outputMembership << mean[i] << '\t';
+    }
+
+  outputMembership << std::endl;
+
+  for( unsigned int i = 0; i < 3; i++ )
+    {
+    for( unsigned int j = 0; j < 3; j++ )
+      {
+      outputMembership << covariance(i,j) << '\t';
+      }
+    outputMembership << std::endl;
+    }
+
+  outputMembership.close();
 
   return EXIT_SUCCESS;
 }
