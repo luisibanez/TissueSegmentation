@@ -46,8 +46,8 @@ MahalanobisDistanceImageFilter< TInputImage, TOutputImage >
 ::BeforeThreadedGenerateData()
 {
   // Setup up the functor
-  this->GetFunctor().SetMean( m_Mean );
-  this->GetFunctor().SetCovariance( m_Covariance );
+  this->GetFunctor().SetMean( this->m_Mean );
+  this->GetFunctor().SetCovariance( this->m_Covariance );
 }
 } // end namespace itk
 

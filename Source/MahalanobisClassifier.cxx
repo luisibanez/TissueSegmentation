@@ -62,7 +62,7 @@ int main(int argc, char * argv[] )
 
   std::ifstream inputMembership;
 
-  inputMembership.open( argv[3] );
+  inputMembership.open( argv[2] );
 
   for( unsigned int i = 0; i < NumberOfComponents; i++ )
     {
@@ -85,10 +85,13 @@ int main(int argc, char * argv[] )
   std::cout << "Covariance matrix = " << std::endl;
   std::cout << covariance << std::endl;
 
+  filter->SetMean( mean );
+  filter->SetCovariance( covariance );
+
 
   WriterType::Pointer writer = WriterType::New();
 
-  writer->SetFileName( argv[2] );
+  writer->SetFileName( argv[3] );
 
   filter->SetInput( reader->GetOutput() );
   writer->SetInput( filter->GetOutput() );

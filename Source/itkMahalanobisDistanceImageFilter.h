@@ -116,10 +116,18 @@ public:
   typedef typename DistanceMetricType::MeanVectorType         MeanVectorType;
   typedef typename DistanceMetricType::CovarianceMatrixType   CovarianceMatrixType;
 
+  itkSetMacro( Mean, MeanVectorType );
+  itkSetMacro( Covariance, CovarianceMatrixType );
+
+  itkGetMacro( Mean, MeanVectorType );
+  itkGetMacro( Covariance, CovarianceMatrixType );
+
+
 #ifdef ITK_USE_CONCEPT_CHECKING
   /** Begin concept checking */
   /** End concept checking */
 #endif
+
 protected:
   MahalanobisDistanceImageFilter();
   virtual ~MahalanobisDistanceImageFilter() {}
