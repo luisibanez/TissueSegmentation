@@ -139,5 +139,14 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_epithelium_Membership_classified.mhd
   )
 
+ExternalData_Add_Test( UNCTissueData
+  NAME Test16
+  COMMAND MembershipImageFilter
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_small_germ_cells_Membership_classified.mhd
+  )
+
+
 
 
