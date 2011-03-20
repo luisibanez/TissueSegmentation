@@ -23,10 +23,10 @@ ExternalData_Add_Test( UNCTissueData
   COMMAND VectorConfidenceConnected
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_outer.png
-  10
-  10
+  DATA{ernou.tor5564m12_lumen_seeds.txt}
   3.0
   3
+  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
   )
 
 ExternalData_Add_Test( UNCTissueData
@@ -34,11 +34,10 @@ ExternalData_Add_Test( UNCTissueData
   COMMAND VectorConfidenceConnected
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen.png
-  250
-  300
+  DATA{ernou.tor5564m12_small_lumen_seeds.txt}
   3.5
   5
-  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
   )
 
 ExternalData_Add_Test( UNCTissueData
@@ -70,7 +69,7 @@ ExternalData_Add_Test( UNCTissueData
   NAME Test8
   COMMAND MahalanobisClassifier
   DATA{ernou.tor5564m12_small.tif}
-  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
   ${TEMP}/ernou.tor5564m12_small_lumen_Mahalanobis_classified.mhd
   )
 
@@ -86,7 +85,7 @@ ExternalData_Add_Test( UNCTissueData
   NAME Test10
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12_small.tif}
-  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
   ${TEMP}/ernou.tor5564m12_small_lumen_Membership_classified.mhd
   )
 

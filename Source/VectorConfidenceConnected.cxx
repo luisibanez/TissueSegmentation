@@ -24,11 +24,11 @@
 
 int main( int argc, char *argv[] )
 {
-  if( argc < 8 )
+  if( argc < 7 )
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage outputImage seedX seedY multiplier iterations outputMembershipFunctionFile" << std::endl;
+    std::cerr << " inputImage outputImage inputSeedsFile multiplier iterations outputMembershipFunctionFile" << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -58,11 +58,11 @@ int main( int argc, char *argv[] )
   confidenceConnected->SetInput( reader->GetOutput() );
   writer->SetInput( confidenceConnected->GetOutput() );
 
-  const double multiplier = atof( argv[5] );
+  const double multiplier = atof( argv[4] );
 
   confidenceConnected->SetMultiplier( multiplier );
 
-  const unsigned int iterations = atoi( argv[6] );
+  const unsigned int iterations = atoi( argv[5] );
 
   confidenceConnected->SetNumberOfIterations( iterations );
 
@@ -70,10 +70,17 @@ int main( int argc, char *argv[] )
 
   InputImageType::IndexType  index;
 
-  index[0] = atoi( argv[3] );
-  index[1] = atoi( argv[4] );
+  std::ifstream inputSeedsFile;
 
-  confidenceConnected->SetSeed( index );
+  inputSeedsFile.open( argv[3] );
+
+  while( inputSeedsFile >> index[0] >> index[1] )
+    {
+    confidenceConnected->SetSeed( index );
+    }
+
+  inputSeedsFile.close();
+
 
   confidenceConnected->SetInitialNeighborhoodRadius( 3 );
 
@@ -103,7 +110,7 @@ int main( int argc, char *argv[] )
 
   std::ofstream outputMembership;
 
-  outputMembership.open( argv[7] );
+  outputMembership.open( argv[6] );
 
   for( unsigned int i = 0; i < 3; i++ )
     {
