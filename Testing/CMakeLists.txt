@@ -5,21 +5,21 @@
 set(TEMP ${PROJECT_BINARY_DIR}/Testing/Temporary)
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test1
+  NAME Test01
   COMMAND HistogramInRGBSpace
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_histogram.mhd
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test2
+  NAME Test02
   COMMAND HistogramInRGBSpace
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_histogram.mhd
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test3
+  NAME Test03
   COMMAND VectorConfidenceConnected
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_outer.png
@@ -31,7 +31,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test4
+  NAME Test04
   COMMAND VectorConfidenceConnected
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen.png
@@ -43,14 +43,14 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test5
+  NAME Test05
   COMMAND ImageClassifier
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen_classified.png
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test6
+  NAME Test06
   COMMAND HistogramInRGBSpace
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_histogram_pure.mhd
@@ -59,7 +59,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test7
+  NAME Test07
   COMMAND HistogramInRGBSpace
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_histogram_residual.mhd
@@ -68,7 +68,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test8
+  NAME Test08
   COMMAND MahalanobisClassifier
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
@@ -76,7 +76,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test9
+  NAME Test09
   COMMAND MahalanobisClassifier
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
