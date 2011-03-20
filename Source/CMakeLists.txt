@@ -12,3 +12,6 @@ target_link_libraries( ImageClassifier ${ITK_LIBRARIES} )
 
 add_executable( MahalanobisClassifier  MahalanobisClassifier.cxx )
 target_link_libraries( MahalanobisClassifier ${ITK_LIBRARIES} )
+
+add_executable( MembershipImageFilter  MembershipImageFilter.cxx )
+target_link_libraries( MembershipImageFilter ${ITK_LIBRARIES} )
