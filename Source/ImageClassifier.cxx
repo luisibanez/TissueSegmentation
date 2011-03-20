@@ -18,7 +18,7 @@
 
 #include "itkImageClassifierFilter.h"
 #include "itkFixedArray.h"
-#include "itkGaussianMixtureModelComponent.h"
+#include "itkGaussianMembershipFunction.h"
 #include "itkMaximumDecisionRule2.h"
 #include "itkImageToListSampleAdaptor.h"
 #include "itkImageFileReader.h"
@@ -26,16 +26,18 @@
 
 int main(int argc, char * argv [] )
 {
-  if( argc < 3 )
+  if( argc < 5 )
     {
     std::cerr << "Missing command line arguments: ";
-    std::cerr << argv[0] << "\t" << "InputImage ClassifiedOutputImage" << std::endl;
+    std::cerr << argv[0] << "\t" << "InputImage ClassifiedOutputImage inputMembership1 inputMembership2 ..." << std::endl;
     return EXIT_FAILURE;
     }
 
   const unsigned int MeasurementVectorSize = 3;
+  const unsigned int NumberOfComponents = MeasurementVectorSize;
   typedef unsigned char MeasurementComponentType;
-  const unsigned int numberOfClasses = 2;
+
+  const unsigned int numberOfClasses = argc - 3;
 
   typedef itk::FixedArray< MeasurementComponentType, MeasurementVectorSize > InputPixelType;
   typedef InputPixelType          MeasurementVectorType;
@@ -79,15 +81,7 @@ int main(int argc, char * argv [] )
 
   ClassLabelVectorObjectType::Pointer  classLabelsObject = ClassLabelVectorObjectType::New();
 
-  ClassLabelVectorType & classLabelVector  = classLabelsObject->Get();
-
-  typedef ImageClassifierFilterType::ClassLabelType        ClassLabelType;
-
-  ClassLabelType  class1 = 0;
-  ClassLabelType  class2 = 255;
-
-  classLabelVector.push_back( class1 );
-  classLabelVector.push_back( class2 );
+  ClassLabelVectorType classLabelVector  = classLabelsObject->Get();
 
   typedef ImageClassifierFilterType::MembershipFunctionVectorObjectType MembershipFunctionVectorObjectType;
 
@@ -98,60 +92,53 @@ int main(int argc, char * argv [] )
   MembershipFunctionVectorType membershipFunctions;
 
   typedef itk::Statistics::GaussianMembershipFunction< MeasurementVectorType >  GaussianMembershipFunctionType;
+  typedef GaussianMembershipFunctionType::MeanType         MeanVectorType;
+  typedef GaussianMembershipFunctionType::CovarianceType   CovarianceMatrixType;
 
-  GaussianMembershipFunctionType::Pointer membershipFunction1 = GaussianMembershipFunctionType::New();
-  GaussianMembershipFunctionType::Pointer membershipFunction2 = GaussianMembershipFunctionType::New();
+  for( unsigned int j = 0; j < numberOfClasses; j++ )
+    {
+    classLabelVector.push_back( 100 + j * 50 );
 
-  GaussianMembershipFunctionType::MeanType mean1( MeasurementVectorSize );
+    GaussianMembershipFunctionType::Pointer membershipFunction = GaussianMembershipFunctionType::New();
 
-  mean1[0] = 230.0;
-  mean1[1] = 223.5;
-  mean1[2] = 230.5;
+    MeanVectorType mean(NumberOfComponents);
 
-  membershipFunction1->SetMean( mean1 );
+    CovarianceMatrixType covariance(NumberOfComponents,NumberOfComponents);
 
+    std::ifstream inputMembership;
 
-  GaussianMembershipFunctionType::CovarianceType covariance1( MeasurementVectorSize, MeasurementVectorSize );
+    const unsigned int numberOfArgument = j + 3;
 
-  covariance1(0,0) = 16.2437;
-  covariance1(0,1) = 18.9413;
-  covariance1(0,2) = 4.37528;
-  covariance1(1,0) = 18.9413;
-  covariance1(1,1) = 71.5639;
-  covariance1(1,2) = 12.5409;
-  covariance1(2,0) = 4.37528;
-  covariance1(2,1) = 12.5409;
-  covariance1(2,2) = 31.2956;
+    inputMembership.open( argv[numberOfArgument] );
 
-  membershipFunction1->SetCovariance( covariance1 );
+    for( unsigned int i = 0; i < NumberOfComponents; i++ )
+      {
+      inputMembership >> mean[i];
+      }
 
+    for( unsigned int i = 0; i < NumberOfComponents; i++ )
+      {
+      for( unsigned int j = 0; j < NumberOfComponents; j++ )
+        {
+        inputMembership >> covariance(i,j);
+        }
+      }
 
-  GaussianMembershipFunctionType::MeanType mean2( MeasurementVectorSize );
+    inputMembership.close();
 
-  mean2[0] = 0.0;
-  mean2[1] = 0.0;
-  mean2[2] = 0.0;
+    std::cout << "Mean vector = " << std::endl;
+    std::cout << mean << std::endl;
 
-  membershipFunction2->SetMean( mean2 );
+    std::cout << "Covariance matrix = " << std::endl;
+    std::cout << covariance << std::endl;
 
+    membershipFunction->SetMean( mean );
+    membershipFunction->SetCovariance( covariance );
 
-  GaussianMembershipFunctionType::CovarianceType covariance2( MeasurementVectorSize, MeasurementVectorSize );
+    membershipFunctions.push_back( membershipFunction.GetPointer() );
+    }
 
-  covariance2(0,0) = 1.0;
-  covariance2(0,1) = 0.0;
-  covariance2(0,2) = 0.0;
-  covariance2(1,0) = 0.0;
-  covariance2(1,1) = 1.0;
-  covariance2(1,2) = 0.0;
-  covariance2(2,0) = 0.0;
-  covariance2(2,1) = 0.0;
-  covariance2(2,2) = 1.0;
-
-  membershipFunction2->SetCovariance( covariance2 );
-
-
-  membershipFunctions.push_back( membershipFunction1.GetPointer() );
-  membershipFunctions.push_back( membershipFunction2.GetPointer() );
+  classLabelsObject->Set( classLabelVector );
 
   membershipFunctionsObject->Set( membershipFunctions );
 
@@ -161,11 +148,11 @@ int main(int argc, char * argv [] )
 
   ImageClassifierFilterType::MembershipFunctionsWeightsArrayType  weightsArray(numberOfClasses);
 
-  weightsArray[0] = 0.5;
-  weightsArray[1] = 0.5;
+  weightsArray[0] = 0.3;
+  weightsArray[1] = 0.3;
+  weightsArray[2] = 0.4;
 
   weightArrayObjects->Set( weightsArray );
-
 
   filter->SetImage( image );
   filter->SetNumberOfClasses( numberOfClasses );
