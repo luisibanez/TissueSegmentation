@@ -73,3 +73,11 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
   ${TEMP}/ernou.tor5564m12_small_lumen_Mahalanobis_classified.png
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test9
+  COMMAND MahalanobisClassifier
+  DATA{ernou.tor5564m12.tif}
+  ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_lumen_Mahalanobis_classified.png
+  )
