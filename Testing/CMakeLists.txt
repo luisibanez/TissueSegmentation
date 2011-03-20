@@ -122,3 +122,13 @@ ExternalData_Add_Test( UNCTissueData
   1
   ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test14
+  COMMAND MembershipImageFilter
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_small_epithelium_Membership_classified.mhd
+  )
+
+
