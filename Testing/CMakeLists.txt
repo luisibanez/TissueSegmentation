@@ -161,3 +161,17 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
   ${TEMP}/ernou.tor5564m12_germ_cells_histogram.mhd
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test19
+  COMMAND HistogramMembership
+  ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_lumen_histogram.mhd
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test20
+  COMMAND HistogramMembership
+  ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_epithelium_histogram.mhd
+  )
