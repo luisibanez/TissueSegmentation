@@ -152,9 +152,10 @@ int main(int argc, char * argv [] )
 
   ImageClassifierFilterType::MembershipFunctionsWeightsArrayType  weightsArray(numberOfClasses);
 
-  weightsArray[0] = 0.3;
+  weightsArray[0] = 0.2;
   weightsArray[1] = 0.3;
-  weightsArray[2] = 0.4;
+  weightsArray[2] = 0.2;
+  weightsArray[3] = 0.3;
 
   weightArrayObjects->Set( weightsArray );
 
