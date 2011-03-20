@@ -87,9 +87,12 @@ int main(int argc, char * argv[] )
       }
     }
 
+  std::cout << "usingMask = " << usingMask << std::endl;
+  std::cout << "negatedMask = " << negatedMask << std::endl;
+
   if( usingMask )
     {
-    maskReader->SetFileName( argv[2] );
+    maskReader->SetFileName( argv[3] );
 
     try
       {
@@ -146,7 +149,7 @@ int main(int argc, char * argv[] )
 
       if( negatedMask )
         {
-        if( maskPixel )
+        if( !maskPixel )
           {
           InputPixelType inputPixel = it.Get();
           const PixelComponentType & red   = inputPixel.GetRed();
@@ -163,7 +166,7 @@ int main(int argc, char * argv[] )
         }
       else
         {
-        if( !maskPixel )
+        if( maskPixel )
           {
           InputPixelType inputPixel = it.Get();
           const PixelComponentType & red   = inputPixel.GetRed();
@@ -204,7 +207,7 @@ int main(int argc, char * argv[] )
 
   WriterType::Pointer writer = WriterType::New();
 
-  writer->SetFileName( argv[3] );
+  writer->SetFileName( argv[2] );
   writer->SetInput( histogramImage );
 
 
