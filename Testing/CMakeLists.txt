@@ -138,9 +138,9 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_mature_cells.png
   DATA{ernou.tor5564m12_small_mature_cells_seeds.txt}
-  1.5
-  2
+  0.01
   1
+  3
   ${TEMP}/ernou.tor5564m12_small_mature_cells_membership_function.txt
   )
 
