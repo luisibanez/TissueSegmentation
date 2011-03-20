@@ -68,21 +68,39 @@ int main( int argc, char *argv[] )
 
   confidenceConnected->SetReplaceValue( 255 );
 
-  InputImageType::IndexType  index;
+  try
+    {
+    reader->Update();
+    }
+  catch( itk::ExceptionObject & excep )
+    {
+    std::cerr << excep << std::endl;
+    return EXIT_FAILURE;
+    }
+
+  InputImageType::ConstPointer inputImage = reader->GetOutput();
+
+  InputImageType::IndexType            seedIndex;
+
+  double seedX;
+  double seedY;
 
   std::ifstream inputSeedsFile;
 
   inputSeedsFile.open( argv[3] );
 
-  while( inputSeedsFile >> index[0] >> index[1] )
+  while( inputSeedsFile >> seedX >> seedY )
     {
-    confidenceConnected->SetSeed( index );
+    seedIndex[0] = static_cast< InputImageType::IndexValueType >( seedX );
+    seedIndex[1] = static_cast< InputImageType::IndexValueType >( seedY );
+    std::cout << "Point = " << seedX << " " << seedY << "  Index = " << seedIndex << std::endl;
+    confidenceConnected->AddSeed( seedIndex );
     }
 
   inputSeedsFile.close();
 
 
-  confidenceConnected->SetInitialNeighborhoodRadius( 3 );
+  confidenceConnected->SetInitialNeighborhoodRadius( 2 );
 
   try
     {
@@ -90,8 +108,8 @@ int main( int argc, char *argv[] )
     }
   catch( itk::ExceptionObject & excep )
     {
-    std::cerr << "Exception caught !" << std::endl;
     std::cerr << excep << std::endl;
+    return EXIT_FAILURE;
     }
 
   typedef ConnectedFilterType::MeanVectorType   MeanVectorType;

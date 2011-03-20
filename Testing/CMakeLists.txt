@@ -96,3 +96,14 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
   ${TEMP}/ernou.tor5564m12_lumen_Membership_classified.mhd
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test12
+  COMMAND VectorConfidenceConnected
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_germ_cells.png
+  DATA{ernou.tor5564m12_small_germ_cells_seeds.txt}
+  3.5
+  5
+  ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
+  )
