@@ -27,44 +27,83 @@ int main(int argc, char * argv[] )
 
   if( argc < 3 )
   {
-    std::cerr << argv[0] << " inputFile histogramRGBFile" << std::endl;
+    std::cerr << argv[0] << " inputFile histogramRGBFile [imageMask] [negatedMask=1/0]" << std::endl;
     return EXIT_FAILURE;
   }
+
+  const unsigned int ImageDimension = 2;
+  const unsigned int NumberOfComponents = 3;
 
   typedef unsigned char                        PixelComponentType;
   typedef itk::RGBPixel<PixelComponentType>    InputPixelType;
 
   // Ideally this type should be itk::IdentifierType
   // but currently ParaView can't read an image of this type in Linux 64 bits.
-  typedef unsigned int                         OutputPixelType;
+  typedef unsigned int    OutputPixelType;
 
-  typedef itk::Image< InputPixelType,  3 >   InputImageType;
-  typedef itk::Image< OutputPixelType, 3 >   OutputImageType;
+  typedef unsigned char   MaskPixelType;
 
-  typedef itk::ImageFileReader< InputImageType  > ReaderType;
+  typedef itk::Image< InputPixelType,  ImageDimension >   InputImageType;
+  typedef itk::Image< MaskPixelType, ImageDimension >     MaskImageType;
+
+  typedef itk::Image< OutputPixelType, NumberOfComponents >   OutputImageType;
+
+  typedef itk::ImageFileReader< InputImageType  > InputReaderType;
+  typedef itk::ImageFileReader< MaskImageType   > MaskReaderType;
   typedef itk::ImageFileWriter< OutputImageType > WriterType;
 
   typedef OutputImageType::RegionType    RegionType;
   typedef OutputImageType::SizeType      SizeType;
   typedef OutputImageType::IndexType     IndexType;
 
-  InputImageType::Pointer inputImage;
+  InputReaderType::Pointer inputReader = InputReaderType::New();
 
-  { // local scope for destroying the reader
+  inputReader->SetFileName( argv[1] );
 
-    ReaderType::Pointer reader = ReaderType::New();
-    reader->SetFileName( argv[1] );
+  try
+    {
+    inputReader->Update();
+    }
+  catch( itk::ExceptionObject & excp )
+    {
+    std::cerr << excp << std::endl;
+    return EXIT_FAILURE;
+    }
+
+  InputImageType::ConstPointer inputImage = inputReader->GetOutput();
+
+  MaskReaderType::Pointer maskReader = MaskReaderType::New();
+
+  bool usingMask = false;
+  bool negatedMask = false;
+
+  if( argc > 3 )
+    {
+    usingMask = true;
+
+    if( argc > 4 )
+      {
+      negatedMask = atoi( argv[4] );
+      }
+    }
+
+  if( usingMask )
+    {
+    maskReader->SetFileName( argv[2] );
+
     try
       {
-      reader->Update();
+      maskReader->Update();
       }
     catch( itk::ExceptionObject & excp )
       {
-      std::cout << excp << std::endl;
-      return -1;
+      std::cerr << excp << std::endl;
+      return EXIT_FAILURE;
       }
-    inputImage = reader->GetOutput();
-  }
+    }
+
+  MaskImageType::ConstPointer maskImage = maskReader->GetOutput();
+
 
   RegionType region;
   SizeType   size;
@@ -85,33 +124,87 @@ int main(int argc, char * argv[] )
   histogramImage->FillBuffer( 0 );
 
 
-  typedef itk::ImageRegionConstIterator< InputImageType > IteratorType;
+  typedef itk::ImageRegionConstIterator< InputImageType > InputIteratorType;
 
-  IteratorType it( inputImage, inputImage->GetBufferedRegion() );
+  InputIteratorType it( inputImage, inputImage->GetBufferedRegion() );
   it.GoToBegin();
+
 
   IndexType index;
 
-  while( !it.IsAtEnd() )
+  if( usingMask )
     {
-    InputPixelType pixel = it.Get();
-    PixelComponentType red   = pixel.GetRed();
-    PixelComponentType green = pixel.GetGreen();
-    PixelComponentType blue  = pixel.GetBlue();
-    index[0] = red;
-    index[1] = green;
-    index[2] = blue;
+    typedef itk::ImageRegionConstIterator< MaskImageType > MaskIteratorType;
 
-    OutputPixelType count = histogramImage->GetPixel( index );
-    count++;
-    histogramImage->SetPixel( index, count );
-    ++it;
+    MaskIteratorType mit( maskImage, maskImage->GetBufferedRegion() );
+    mit.GoToBegin();
+
+
+    while( !it.IsAtEnd() )
+      {
+      MaskPixelType maskPixel = mit.Get();
+
+      if( negatedMask )
+        {
+        if( maskPixel )
+          {
+          InputPixelType inputPixel = it.Get();
+          const PixelComponentType & red   = inputPixel.GetRed();
+          const PixelComponentType & green = inputPixel.GetGreen();
+          const PixelComponentType & blue  = inputPixel.GetBlue();
+          index[0] = red;
+          index[1] = green;
+          index[2] = blue;
+
+          OutputPixelType count = histogramImage->GetPixel( index );
+          count++;
+          histogramImage->SetPixel( index, count );
+          }
+        }
+      else
+        {
+        if( !maskPixel )
+          {
+          InputPixelType inputPixel = it.Get();
+          const PixelComponentType & red   = inputPixel.GetRed();
+          const PixelComponentType & green = inputPixel.GetGreen();
+          const PixelComponentType & blue  = inputPixel.GetBlue();
+          index[0] = red;
+          index[1] = green;
+          index[2] = blue;
+
+          OutputPixelType count = histogramImage->GetPixel( index );
+          count++;
+          histogramImage->SetPixel( index, count );
+          }
+        }
+
+      ++it;
+      ++mit;
+      }
     }
+  else
+    {
+    while( !it.IsAtEnd() )
+      {
+      InputPixelType inputPixel = it.Get();
+      const PixelComponentType & red   = inputPixel.GetRed();
+      const PixelComponentType & green = inputPixel.GetGreen();
+      const PixelComponentType & blue  = inputPixel.GetBlue();
+      index[0] = red;
+      index[1] = green;
+      index[2] = blue;
 
+      OutputPixelType count = histogramImage->GetPixel( index );
+      count++;
+      histogramImage->SetPixel( index, count );
+      ++it;
+      }
+    }
 
   WriterType::Pointer writer = WriterType::New();
 
-  writer->SetFileName( argv[2] );
+  writer->SetFileName( argv[3] );
   writer->SetInput( histogramImage );
 
 

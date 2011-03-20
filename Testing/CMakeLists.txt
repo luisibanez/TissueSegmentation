@@ -46,3 +46,21 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen_classified.png
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test6
+  COMMAND HistogramInRGBSpace
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_histogram.mhd
+  ${TEMP}/ernou.tor5564m12_small_histogram_pure.mhd
+  0
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test7
+  COMMAND HistogramInRGBSpace
+  DATA{ernou.tor5564m12_small.tif}
+  ${TEMP}/ernou.tor5564m12_small_histogram.mhd
+  ${TEMP}/ernou.tor5564m12_small_histogram_residual.mhd
+  1
+  )
