@@ -24,8 +24,8 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_outer.png
   DATA{ernou.tor5564m12_lumen_seeds.txt}
-  3.0
-  3
+  4.0
+  2
   ${TEMP}/ernou.tor5564m12_lumen_membership_function.txt
   )
 
@@ -35,8 +35,8 @@ ExternalData_Add_Test( UNCTissueData
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_lumen.png
   DATA{ernou.tor5564m12_small_lumen_seeds.txt}
-  3.5
-  5
+  1.5
+  3
   ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
   )
 
