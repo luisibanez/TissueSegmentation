@@ -118,6 +118,18 @@ ExternalData_Add_Test( UNCTissueData
 
 ExternalData_Add_Test( UNCTissueData
   NAME Test13
+  COMMAND VectorConfidenceConnected
+  DATA{ernou.tor5564m12_epithelium.tif}
+  ${TEMP}/ernou.tor5564m12_epithelium_epithelium.png
+  DATA{ernou.tor5564m12_epithelium_seeds.txt}
+  1.5
+  2
+  1
+  ${TEMP}/ernou.tor5564m12_epithelium_epithelium_membership_function.txt
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test14
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
@@ -125,7 +137,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test14
+  NAME Test15
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
@@ -133,7 +145,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test15
+  NAME Test16
   COMMAND VectorConfidenceConnected
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_mature_cells.png
@@ -145,7 +157,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test16
+  NAME Test17
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_mature_cells_membership_function.txt
@@ -153,7 +165,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test17
+  NAME Test18
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_small_mature_cells_membership_function.txt
@@ -162,7 +174,7 @@ ExternalData_Add_Test( UNCTissueData
 
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test18
+  NAME Test19
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
@@ -170,7 +182,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test19
+  NAME Test20
   COMMAND MembershipImageFilter
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
@@ -178,35 +190,35 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test20
+  NAME Test21
   COMMAND HistogramMembership
   ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
   ${TEMP}/ernou.tor5564m12_germ_cells_histogram.mhd
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test21
+  NAME Test22
   COMMAND HistogramMembership
   ${TEMP}/ernou.tor5564m12_small_lumen_membership_function.txt
   ${TEMP}/ernou.tor5564m12_lumen_histogram.mhd
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test22
+  NAME Test23
   COMMAND HistogramMembership
   ${TEMP}/ernou.tor5564m12_small_epithelium_membership_function.txt
   ${TEMP}/ernou.tor5564m12_epithelium_histogram.mhd
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test23
+  NAME Test24
   COMMAND HistogramMembership
   ${TEMP}/ernou.tor5564m12_small_mature_cells_membership_function.txt
   ${TEMP}/ernou.tor5564m12_mature_cells_histogram.mhd
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test24
+  NAME Test25
   COMMAND ImageClassifier
   DATA{ernou.tor5564m12_small.tif}
   ${TEMP}/ernou.tor5564m12_small_classified_labels.png
@@ -218,7 +230,7 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test25
+  NAME Test26
   COMMAND ImageClassifier
   DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou.tor5564m12_classified_labels.png
