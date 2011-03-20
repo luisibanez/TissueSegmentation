@@ -154,3 +154,10 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
   ${TEMP}/ernou.tor5564m12_germ_cells_Membership_classified.mhd
   )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test18
+  COMMAND HistogramMembership
+  ${TEMP}/ernou.tor5564m12_small_germ_cells_membership_function.txt
+  ${TEMP}/ernou.tor5564m12_germ_cells_histogram.mhd
+  )

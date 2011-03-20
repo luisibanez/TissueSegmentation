@@ -15,3 +15,6 @@ target_link_libraries( MahalanobisClassifier ${ITK_LIBRARIES} )
 
 add_executable( MembershipImageFilter  MembershipImageFilter.cxx )
 target_link_libraries( MembershipImageFilter ${ITK_LIBRARIES} )
+
+add_executable( HistogramMembership  HistogramMembership.cxx )
+target_link_libraries( HistogramMembership ${ITK_LIBRARIES} )
