@@ -102,6 +102,10 @@ int main( int argc, char *argv[] )
 
   confidenceConnected->SetInitialNeighborhoodRadius( neighborhoodRadius );
 
+  std::cout << "multiplier = " << multiplier << std::endl;
+  std::cout << "iterations = " << iterations << std::endl;
+  std::cout << "neighborhoodRadius = " << neighborhoodRadius << std::endl;
+
   try
     {
     writer->Update();

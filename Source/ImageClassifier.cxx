@@ -152,10 +152,11 @@ int main(int argc, char * argv [] )
 
   ImageClassifierFilterType::MembershipFunctionsWeightsArrayType  weightsArray(numberOfClasses);
 
-  weightsArray[0] = 0.2;
-  weightsArray[1] = 0.3;
-  weightsArray[2] = 0.2;
-  weightsArray[3] = 0.3;
+  weightsArray[0] = 0.20;   // Lumen
+  weightsArray[1] = 0.25;   // Germ cells
+  weightsArray[2] = 0.20;   // Epithelium
+  weightsArray[3] = 0.30;   // Mature cells
+  weightsArray[4] = 0.05;  // External epithelium
 
   weightArrayObjects->Set( weightsArray );
 
