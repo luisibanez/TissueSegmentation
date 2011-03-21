@@ -15,6 +15,7 @@ include(${ITK_USE_FILE})
 include(${PROJECT_SOURCE_DIR}/CMake/ExternalData.cmake)
 list(APPEND ExternalData_URL_TEMPLATES
   "file://local/home/ibanez/data/UNCTissueSegmentation/%(algo)/%(hash)"
+  "file://local/home/ibanez/data/TubuleExamples/%(algo)/%(hash)"
   "http://midas.kitware.com/api/rest/midas.bitstream.by.hash?hash=%(hash)&algorithm=%(algo)"
   )
 
