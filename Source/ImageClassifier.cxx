@@ -100,7 +100,7 @@ int main(int argc, char * argv [] )
 
   for( unsigned int j = 0; j < numberOfClasses; j++ )
     {
-    classLabelVector.push_back( 100 + j * 50 );
+    classLabelVector.push_back( j );
 
     GaussianMembershipFunctionType::Pointer membershipFunction = GaussianMembershipFunctionType::New();
 

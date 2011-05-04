@@ -18,3 +18,6 @@ target_link_libraries( MembershipImageFilter ${ITK_LIBRARIES} )
 
 add_executable( HistogramMembership  HistogramMembership.cxx )
 target_link_libraries( HistogramMembership ${ITK_LIBRARIES} )
+
+add_executable( ExtractLabelAsMask  ExtractLabelAsMask.cxx )
+target_link_libraries( ExtractLabelAsMask ${ITK_LIBRARIES} )

@@ -5,6 +5,86 @@
 set(TEMP ${PROJECT_BINARY_DIR}/Testing/Temporary)
 
 ExternalData_Add_Test( UNCTissueData
+  NAME Test37
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_classified_labels_epithelium_epithelium.png
+  5
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test36
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_classified_labels_mature_cells.png
+  4
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test35
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_classified_labels_epithelium.png
+  3
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test34
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_classified_labels_lumen.png
+  2
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test33
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_classified_labels_germ_cells.png
+  1
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test32
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_small_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_small_classified_labels_epithelium_epithelium.png
+  5
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test31
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_small_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_small_classified_labels_mature_cells.png
+  4
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test30
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_small_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_small_classified_labels_epithelium.png
+  3
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test29
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_small_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_small_classified_labels_lumen.png
+  2
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test28
+  COMMAND ExtractLabelAsMask
+  ${TEMP}/ernou.tor5564m12_small_classified_labels.png
+  ${TEMP}/ernou.tor5564m12_small_classified_labels_germ_cells.png
+  1
+  )
+
+ExternalData_Add_Test( UNCTissueData
   NAME Test27
   COMMAND ImageClassifier
   DATA{ernou.tor5564m12.tif}
