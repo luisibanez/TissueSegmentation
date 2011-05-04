@@ -23,8 +23,7 @@
 #include "itkImageToListSampleAdaptor.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
-#include "itkScalarToRGBPixelFunctor.h"
-#include "itkUnaryFunctorImageFilter.h"
+#include "itkLabelToRGBImageFilter.h"
 
 int main(int argc, char * argv [] )
 {
@@ -212,14 +211,7 @@ int main(int argc, char * argv [] )
 
   RGBWriterType::Pointer colorWriter = RGBWriterType::New();
 
-
-  typedef itk::Functor::ScalarToRGBPixelFunctor< unsigned char > ColorMapFunctorType;
-
-  typedef itk::UnaryFunctorImageFilter<
-                                OutputImageType,
-                                RGBImageType,
-                                ColorMapFunctorType
-                                                > ColorMapFilterType;
+  typedef itk::LabelToRGBImageFilter< OutputImageType, RGBImageType > ColorMapFilterType;
 
   ColorMapFilterType::Pointer colorMapFilter = ColorMapFilterType::New();
 
