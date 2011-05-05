@@ -217,6 +217,21 @@ int main(int argc, char * argv [] )
 
   colorMapFilter->SetInput(  filter->GetOutput() );
 
+  colorMapFilter->ResetColors();
+
+  RGBPixelType background;
+  background.Fill(0);
+
+  colorMapFilter->SetBackgroundValue( 0 );
+  colorMapFilter->SetBackgroundColor( background );
+
+  colorMapFilter->AddColor( 255,   0,   0 );
+  colorMapFilter->AddColor(   0, 255,   0 );
+  colorMapFilter->AddColor(   0,   0, 255 );
+  colorMapFilter->AddColor( 255,   0, 255 );
+  colorMapFilter->AddColor(   0, 255, 255 );
+  colorMapFilter->AddColor( 255, 255,   0 );
+
   colorWriter->SetFileName( argv[3] );
 
   colorWriter->SetInput( colorMapFilter->GetOutput() );
