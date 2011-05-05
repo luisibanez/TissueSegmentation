@@ -100,7 +100,7 @@ int main(int argc, char * argv [] )
 
   for( unsigned int j = 0; j < numberOfClasses; j++ )
     {
-    classLabelVector.push_back( 100 + j * 50 );
+    classLabelVector.push_back( j );
 
     GaussianMembershipFunctionType::Pointer membershipFunction = GaussianMembershipFunctionType::New();
 
@@ -216,6 +216,15 @@ int main(int argc, char * argv [] )
   ColorMapFilterType::Pointer colorMapFilter = ColorMapFilterType::New();
 
   colorMapFilter->SetInput(  filter->GetOutput() );
+
+  colorMapFilter->ResetColors();
+
+  colorMapFilter->AddColor( 255,   0,   0 );
+  colorMapFilter->AddColor(   0, 255,   0 );
+  colorMapFilter->AddColor(   0,   0, 255 );
+  colorMapFilter->AddColor( 255,   0, 255 );
+  colorMapFilter->AddColor(   0, 255, 255 );
+  colorMapFilter->AddColor( 255, 255,   0 );
 
   colorWriter->SetFileName( argv[3] );
 
