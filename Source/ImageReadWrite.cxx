@@ -19,6 +19,7 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkImage.h"
+#include "itkRGBPixel.h"
 
 
 int main( int argc, char ** argv )
@@ -30,7 +31,7 @@ int main( int argc, char ** argv )
     return EXIT_FAILURE;
     }
 
-  typedef RGBPixel< unsigned char>  PixelType;
+  typedef itk::RGBPixel< unsigned char>  PixelType;
   const   unsigned int              Dimension = 3;
 
   typedef itk::Image< PixelType, Dimension >    ImageType;
