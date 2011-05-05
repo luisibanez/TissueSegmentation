@@ -21,3 +21,6 @@ target_link_libraries( HistogramMembership ${ITK_LIBRARIES} )
 
 add_executable( ExtractLabelAsMask  ExtractLabelAsMask.cxx )
 target_link_libraries( ExtractLabelAsMask ${ITK_LIBRARIES} )
+
+add_executable( ImageReadWrite  ImageReadWrite.cxx )
+target_link_libraries( ImageReadWrite ${ITK_LIBRARIES} )
