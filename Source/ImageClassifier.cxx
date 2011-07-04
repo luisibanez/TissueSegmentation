@@ -30,7 +30,9 @@ int main(int argc, char * argv [] )
   if( argc < 5 )
     {
     std::cerr << "Missing command line arguments: ";
-    std::cerr << argv[0] << "\t" << "InputImage ClassifiedOutputImage ColorEncodedClassifiedImage inputMembership1 inputMembership2 ..." << std::endl;
+    std::cerr << argv[0] << "\t" << "InputImage ClassifiedOutputImage ColorEncodedClassifiedImage";
+    std::cerr << " inputMembership1 inputMembership2 inputMembership3 inputMembership4 ..." << std::endl;
+    std::cerr << " classWeight1 classWeight2 classWeight3 classWeight4 ..." << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -40,7 +42,7 @@ int main(int argc, char * argv [] )
 
   const unsigned int numberOfArgumentsBeforeMemberships = 4;
 
-  const unsigned int numberOfClasses = argc - numberOfArgumentsBeforeMemberships;
+  const unsigned int numberOfClasses = ( argc - numberOfArgumentsBeforeMemberships ) / 2;
 
   typedef itk::FixedArray< MeasurementComponentType, MeasurementVectorSize > InputPixelType;
   typedef InputPixelType          MeasurementVectorType;
@@ -98,6 +100,8 @@ int main(int argc, char * argv [] )
   typedef GaussianMembershipFunctionType::MeanType         MeanVectorType;
   typedef GaussianMembershipFunctionType::CovarianceType   CovarianceMatrixType;
 
+  ImageClassifierFilterType::MembershipFunctionsWeightsArrayType  weightsArray(numberOfClasses);
+
   for( unsigned int j = 0; j < numberOfClasses; j++ )
     {
     classLabelVector.push_back( j );
@@ -149,13 +153,12 @@ int main(int argc, char * argv [] )
 
   MembershipFunctionsWeightsArrayObjectType::Pointer weightArrayObjects = MembershipFunctionsWeightsArrayObjectType::New();
 
-  ImageClassifierFilterType::MembershipFunctionsWeightsArrayType  weightsArray(numberOfClasses);
 
-  weightsArray[0] = 0.20;   // Lumen
-  weightsArray[1] = 0.25;   // Germ cells
-  weightsArray[2] = 0.20;   // Epithelium
-  weightsArray[3] = 0.30;   // Mature cells
-  weightsArray[4] = 0.05;  // External epithelium
+  for( unsigned int j = 0; j < numberOfClasses; j++ )
+    {
+    const unsigned int numberOfWeight = j + numberOfArgumentsBeforeMemberships + numberOfClasses;
+    weightsArray[j] = atof( argv[numberOfWeight] );
+    }
 
   weightArrayObjects->Set( weightsArray );
 
@@ -225,13 +228,12 @@ int main(int argc, char * argv [] )
   colorMapFilter->SetBackgroundValue( 0 );
   colorMapFilter->SetBackgroundColor( background );
 
-  colorMapFilter->AddColor(   0,   0,   0 );
-  colorMapFilter->AddColor( 255,   0,   0 );
-  colorMapFilter->AddColor(   0, 255,   0 );
-  colorMapFilter->AddColor(   0,   0, 255 );
-  colorMapFilter->AddColor( 255,   0, 255 );
-  colorMapFilter->AddColor(   0, 255, 255 );
-  colorMapFilter->AddColor( 255, 255,   0 );
+  colorMapFilter->AddColor(   0,   0,   0 );  // Black
+  colorMapFilter->AddColor( 255,   0,   0 );  // Red
+  colorMapFilter->AddColor(   0, 255,   0 );  // Green
+  colorMapFilter->AddColor(   0,   0, 255 );  // Blue
+  colorMapFilter->AddColor( 255, 255,   0 );  // Yellow
+  colorMapFilter->AddColor(   0, 255, 255 );  // Cyan
 
   colorWriter->SetFileName( argv[3] );
 
