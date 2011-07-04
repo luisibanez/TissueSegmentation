@@ -91,7 +91,7 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou_tor5564m12_classified_labels.png
   ${TEMP}/ernou_tor5564m12_classified_colors.png
   ${TEMP}/ernou_tor5564m12_small_lumen_membership_function.txt
-  ${TEMP}/ernouernou_64m12_small_germ_cells_membership_function.txt
+  ${TEMP}/ernou_tor5564m12_small_germ_cells_membership_function.txt
   ${TEMP}/ernou_tor5564m12_small_epithelium_membership_function.txt
   ${TEMP}/ernou_tor5564m12_small_mature_cells_membership_function.txt
   ${TEMP}/ernou_tor5564m12_epithelium_epithelium_membership_function.txt
