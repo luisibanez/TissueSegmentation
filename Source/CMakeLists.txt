@@ -24,3 +24,9 @@ target_link_libraries( ExtractLabelAsMask ${ITK_LIBRARIES} )
 
 add_executable( ImageReadWrite  ImageReadWrite.cxx )
 target_link_libraries( ImageReadWrite ${ITK_LIBRARIES} )
+
+add_executable( VotingBinaryHoleFillingImageFilter  VotingBinaryHoleFillingImageFilter.cxx )
+target_link_libraries( VotingBinaryHoleFillingImageFilter ${ITK_LIBRARIES} )
+
+add_executable( VotingBinaryIterativeHoleFillingImageFilter  VotingBinaryIterativeHoleFillingImageFilter.cxx )
+target_link_libraries( VotingBinaryIterativeHoleFillingImageFilter ${ITK_LIBRARIES} )

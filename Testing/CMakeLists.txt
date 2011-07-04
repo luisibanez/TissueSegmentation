@@ -5,6 +5,102 @@
 set(TEMP ${PROJECT_BINARY_DIR}/Testing/Temporary)
 
 ExternalData_Add_Test( UNCTissueData
+  NAME Test50  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryIterativeHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  50  # Maximun number of iterations
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test46  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_05.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_06.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test45  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_04.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_05.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test44  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_03.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_04.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test43  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_02.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_03.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test42  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_01.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_02.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test41  # goal = eliminate green speckles inside blue regions
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting_01.png
+  2   # Background
+  3   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test40
+  COMMAND ImageClassifier
+  DATA{ernou.tor5564m12.tif}
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium.png
+  ${TEMP}/ernou_tor5564m12_classified_colors_tubules_and_ephitelium.png
+  ${TEMP}/ernou_tor5564m12_small_lumen_membership_function.txt
+  ${TEMP}/ernou_tor5564m12_small_germ_cells_membership_function.txt
+  ${TEMP}/ernou_tor5564m12_small_epithelium_membership_function.txt
+  ${TEMP}/ernou_tor5564m12_small_mature_cells_membership_function.txt
+  ${TEMP}/ernou_tor5564m12_epithelium_epithelium_membership_function.txt # Tunica
+  0.50000   # Lumen
+  0.00001   # Germ cells
+  2.00000   # Epithelium
+  0.10000   # Mature cells
+  0.00000   # Tunica
+  )
+
+ExternalData_Add_Test( UNCTissueData
   NAME Test39
   COMMAND ExtractLabelAsMask
   ${TEMP}/ernou_tor5564m12_classified_labels.png
@@ -100,7 +196,6 @@ ExternalData_Add_Test( UNCTissueData
   0.20   # Epithelium
   0.30   # Mature cells
   0.05   # Tunica
-
   )
 
 ExternalData_Add_Test( UNCTissueData
