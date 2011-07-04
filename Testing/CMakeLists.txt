@@ -94,7 +94,13 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou_tor5564m12_small_germ_cells_membership_function.txt
   ${TEMP}/ernou_tor5564m12_small_epithelium_membership_function.txt
   ${TEMP}/ernou_tor5564m12_small_mature_cells_membership_function.txt
-  ${TEMP}/ernou_tor5564m12_epithelium_epithelium_membership_function.txt
+  ${TEMP}/ernou_tor5564m12_epithelium_epithelium_membership_function.txt # Tunica
+  0.20   # Lumen
+  0.25   # Germ cells
+  0.20   # Epithelium
+  0.30   # Mature cells
+  0.05   # Tunica
+
   )
 
 ExternalData_Add_Test( UNCTissueData
@@ -108,6 +114,11 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou_tor5564m12_small_epithelium_membership_function.txt
   ${TEMP}/ernou_tor5564m12_small_mature_cells_membership_function.txt
   ${TEMP}/ernou_tor5564m12_epithelium_epithelium_membership_function.txt
+  0.20   # Lumen
+  0.25   # Germ cells
+  0.20   # Epithelium
+  0.30   # Mature cells
+  0.05   # Tunica
   )
 
 ExternalData_Add_Test( UNCTissueData
