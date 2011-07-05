@@ -30,3 +30,6 @@ target_link_libraries( VotingBinaryHoleFillingImageFilter ${ITK_LIBRARIES} )
 
 add_executable( VotingBinaryIterativeHoleFillingImageFilter  VotingBinaryIterativeHoleFillingImageFilter.cxx )
 target_link_libraries( VotingBinaryIterativeHoleFillingImageFilter ${ITK_LIBRARIES} )
+
+add_executable( ConnectedComponentsImageFilter  ConnectedComponentsImageFilter.cxx )
+target_link_libraries( ConnectedComponentsImageFilter ${ITK_LIBRARIES} )

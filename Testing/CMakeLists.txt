@@ -5,15 +5,31 @@
 set(TEMP ${PROJECT_BINARY_DIR}/Testing/Temporary)
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test50  # goal = eliminate green speckles inside blue regions
+  NAME Test52
+  COMMAND ConnectedComponentsImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_mask_voting.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_mask_voting_components.png
+  500  # Minimum Component Size
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test51  # goal = eliminate green speckles inside blue regions
   COMMAND VotingBinaryIterativeHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_mask.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_mask_voting.png
+    0 # Background
+  255 # Foreground
+    2 # Radius
+    1 # Majority
+   50 # Maximun number of iterations
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test50
+  COMMAND ExtractLabelAsMask
   ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium.png
-  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_voting.png
-  2   # Background
-  3   # Foreground
-  2   # Radius
-  1   # Majority
-  50  # Maximun number of iterations
+  ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_mask.png
+  3
   )
 
 ExternalData_Add_Test( UNCTissueData
