@@ -69,8 +69,8 @@ int main(int argc, char * argv[] )
 
   MembershipFunctionType::Pointer membershipFunction = MembershipFunctionType::New();
 
-  typedef MembershipFunctionType::MeanType         MeanVectorType;
-  typedef MembershipFunctionType::CovarianceType   CovarianceMatrixType;
+  typedef MembershipFunctionType::MeanVectorType         MeanVectorType;
+  typedef MembershipFunctionType::CovarianceMatrixType   CovarianceMatrixType;
 
   MeanVectorType mean(NumberOfComponents);
 

@@ -19,7 +19,7 @@
 #include "itkImageClassifierFilter.h"
 #include "itkFixedArray.h"
 #include "itkGaussianMembershipFunction.h"
-#include "itkMaximumDecisionRule2.h"
+#include "itkMaximumDecisionRule.h"
 #include "itkImageToListSampleAdaptor.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
@@ -97,8 +97,8 @@ int main(int argc, char * argv [] )
   MembershipFunctionVectorType membershipFunctions;
 
   typedef itk::Statistics::GaussianMembershipFunction< MeasurementVectorType >  GaussianMembershipFunctionType;
-  typedef GaussianMembershipFunctionType::MeanType         MeanVectorType;
-  typedef GaussianMembershipFunctionType::CovarianceType   CovarianceMatrixType;
+  typedef GaussianMembershipFunctionType::MeanVectorType         MeanVectorType;
+  typedef GaussianMembershipFunctionType::CovarianceMatrixType   CovarianceMatrixType;
 
   ImageClassifierFilterType::MembershipFunctionsWeightsArrayType  weightsArray(numberOfClasses);
 
@@ -168,7 +168,7 @@ int main(int argc, char * argv [] )
   filter->SetMembershipFunctions( membershipFunctionsObject );
   filter->SetMembershipFunctionsWeightsArray( weightArrayObjects );
 
-  typedef itk::Statistics::MaximumDecisionRule2  DecisionRuleType;
+  typedef itk::Statistics::MaximumDecisionRule  DecisionRuleType;
   DecisionRuleType::Pointer decisionRule = DecisionRuleType::New();
 
   filter->SetDecisionRule( decisionRule );

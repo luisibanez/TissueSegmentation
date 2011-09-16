@@ -59,8 +59,8 @@ int main(int argc, char * argv[] )
   reader->SetFileName( argv[1] );
 
 
-  typedef MembershipFunctionType::MeanType         MeanVectorType;
-  typedef MembershipFunctionType::CovarianceType   CovarianceMatrixType;
+  typedef MembershipFunctionType::MeanVectorType         MeanVectorType;
+  typedef MembershipFunctionType::CovarianceMatrixType   CovarianceMatrixType;
 
   MeanVectorType mean(NumberOfComponents);
 
