@@ -55,11 +55,8 @@ target_link_libraries( ApproximateSignedDistanceMapImageFilter ${ITK_LIBRARIES} 
 add_executable( InvertFilter   InvertFilter.cxx )
 target_link_libraries( InvertFilter ${ITK_LIBRARIES} )
 
-
-
-
-
-
+add_executable( ShapeOpeningLabelMapFilter   ShapeOpeningLabelMapFilter.cxx )
+target_link_libraries( ShapeOpeningLabelMapFilter ${ITK_LIBRARIES} )
 
 
 

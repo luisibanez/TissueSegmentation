@@ -29,6 +29,7 @@
 #include "itkImageFileWriter.h"
 #include "itkScalarToRGBPixelFunctor.h"
 #include "itkUnaryFunctorImageFilter.h"
+#include "itkRelabelComponentImageFilter.h"
 #include "itkGradientMagnitudeRecursiveGaussianImageFilter.h"
 
 
@@ -146,12 +147,35 @@ int main( int argc, char *argv[] )
     std::cerr << excep << std::endl;
     }
 
+  typedef itk::Image< unsigned short, 2 > SmallLabelImageType;
+  typedef itk::RelabelComponentImageFilter< LabeledImageType, SmallLabelImageType > RelabelFilterType;
 
-  typedef itk::ImageFileWriter< LabeledImageType >  LabelWriterType;
+  RelabelFilterType::Pointer relabeler = RelabelFilterType::New();
+
+  relabeler->SetInput( watershedFilter->GetOutput() );
+
+  typedef std::vector< itk::SizeValueType > SizesInPixelsType;
+
+  const SizesInPixelsType &  sizesInPixels = relabeler->GetSizeOfObjectsInPixels();
+
+  SizesInPixelsType::const_iterator sizeItr = sizesInPixels.begin();
+  SizesInPixelsType::const_iterator sizeEnd = sizesInPixels.end();
+
+  std::cout << "Number of pixels per class " << std::endl;
+  unsigned int kclass = 0;
+  while( sizeItr != sizeEnd )
+    {
+    std::cout << "Class " << kclass << " = " << *sizeItr << std::endl;
+    ++kclass;
+    ++sizeItr;
+    }
+
+
+  typedef itk::ImageFileWriter< SmallLabelImageType >  LabelWriterType;
   LabelWriterType::Pointer labelwriter = LabelWriterType::New();
 
   labelwriter->SetFileName( argv[4] );
-  labelwriter->SetInput( watershedFilter->GetOutput() );
+  labelwriter->SetInput( relabeler->GetOutput() );
 
   try
     {
