@@ -36,11 +36,11 @@ int main( int argc, char *argv[] )
 {
 
 
-  if( argc < 4 )
+  if( argc < 5 )
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage  GradientOutputImage WatershedOutput [lowerThreshold]  [outputScaleLevel]" << std::endl;
+    std::cerr << " inputImage  GradientOutputImage WatershedOutput LabelsOutput [lowerThreshold]  [outputScaleLevel]" << std::endl;
     return 1;
     }
 
@@ -93,16 +93,17 @@ int main( int argc, char *argv[] )
 
   WatershedFilterType::Pointer watershedFilter = WatershedFilterType::New();
 
-  watershedFilter->SetInput( gradienMagnitudeFilter->GetOutput() );
+  // watershedFilter->SetInput( gradienMagnitudeFilter->GetOutput() );
+  watershedFilter->SetInput( reader->GetOutput() ); // to take the input from the Distance Map
 
-  if ( argc > 4 )
+  if ( argc > 5 )
     {
-    watershedFilter->SetThreshold( atof( argv[4] ) );
+    watershedFilter->SetThreshold( atof( argv[5] ) );
     }
 
-  if ( argc > 5 ) 
+  if ( argc > 6 )
     {
-    watershedFilter->SetLevel(     atof( argv[5] ) );
+    watershedFilter->SetLevel(     atof( argv[6] ) );
     }
 
   watershedFilter->Update();
@@ -146,6 +147,23 @@ int main( int argc, char *argv[] )
     }
 
 
-  return 0;
+  typedef itk::ImageFileWriter< LabeledImageType >  LabelWriterType;
+  LabelWriterType::Pointer labelwriter = LabelWriterType::New();
+
+  labelwriter->SetFileName( argv[4] );
+  labelwriter->SetInput( watershedFilter->GetOutput() );
+
+  try
+    {
+    labelwriter->Update();
+    }
+  catch( itk::ExceptionObject & excep )
+    {
+    std::cerr << "Exception caught !" << std::endl;
+    std::cerr << excep << std::endl;
+    }
+
+
+  return EXIT_SUCCESS;
 
 }
