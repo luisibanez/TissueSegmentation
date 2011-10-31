@@ -19,7 +19,7 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "itkBinaryThresholdImageFilter.h"
+#include "itkOrImageFilter.h"
 #include "itkImage.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
@@ -29,8 +29,8 @@ int main( int argc, char * argv[] )
   if( argc < 4 )
     {
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImageFile outputImageFile ";
-    std::cerr << " labelValue [High labelValue ]" << std::endl;
+    std::cerr << " inputImageFile inputImageFile2";
+    std::cerr << " outputImageFile " << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -42,51 +42,25 @@ int main( int argc, char * argv[] )
   typedef itk::Image< InputPixelType,  Dimension >   InputImageType;
   typedef itk::Image< OutputPixelType, Dimension >   OutputImageType;
 
-  typedef itk::BinaryThresholdImageFilter<
-               InputImageType, OutputImageType >  FilterType;
+  typedef itk::OrImageFilter<
+               InputImageType>  FilterType;
 
   typedef itk::ImageFileReader< InputImageType >  ReaderType;
-
   typedef itk::ImageFileWriter< OutputImageType >  WriterType;
 
 
-  ReaderType::Pointer reader = ReaderType::New();
+  ReaderType::Pointer reader1 = ReaderType::New();
+  ReaderType::Pointer reader2 = ReaderType::New();
+  reader1->SetFileName( argv[1] );
+  reader2->SetFileName( argv[2] );
+
   FilterType::Pointer filter = FilterType::New();
+  filter->SetInput( 0, reader1->GetOutput() );
+  filter->SetInput( 1, reader2->GetOutput() );
 
   WriterType::Pointer writer = WriterType::New();
+  writer->SetFileName( argv[3] );
   writer->SetInput( filter->GetOutput() );
-
-  reader->SetFileName( argv[1] );
-
-  filter->SetInput( reader->GetOutput() );
-
-  const OutputPixelType outsideValue = 0;
-  const OutputPixelType insideValue  = 255;
-
-  filter->SetOutsideValue( outsideValue );
-  filter->SetInsideValue(  insideValue  );
-
-  InputPixelType labelValue = atoi( argv[3] );
-
-  InputPixelType lowerThreshold = labelValue;
-  InputPixelType upperThreshold;
-
-  if ( argc >= 4 )
-    {
-    upperThreshold = atoi( argv[4] );
-    }
-  else
-    {
-    upperThreshold = labelValue;
-    }
-
-  std::cout << "Labels to extract = " << "[" << lowerThreshold 
-                                      << "]" << upperThreshold << std::endl;
-
-  filter->SetLowerThreshold( lowerThreshold );
-  filter->SetUpperThreshold( upperThreshold );
-
-  writer->SetFileName( argv[2] );
 
   try
     {

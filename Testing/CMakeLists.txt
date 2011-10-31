@@ -5,6 +5,49 @@
 set(TEMP ${PROJECT_BINARY_DIR}/Testing/Temporary)
 
 ExternalData_Add_Test( UNCTissueData
+  NAME Test57  # goal = apply watershed segmentation to segment the tubules
+  COMMAND WatershedSegmentation
+  ${TEMP}/ernou_tor5564m12_classified_labels_Epithelium_GermCells_solid_mask_distance_map.png
+  ${TEMP}/ernou_tor5564m12_tubles_segmented.png
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test56  # goal = apply watershed segmentation to segment the tubules
+  COMMAND SignedDanielssonDistanceMapImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_Epithelium_GermCells_solid_mask.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_Epithelium_GermCells_solid_mask_distance_map.png
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test55  # goal = fill in the holes in the combined epithelim_Germ cells mask 
+  COMMAND VotingBinaryHoleFillingImageFilter
+  ${TEMP}/ernou_tor5564m12_classified_labels_Epithelium_GermCells.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_Epithelium_GermCells_solid_mask.png
+  0   # Background
+  255   # Foreground
+  2   # Radius
+  1   # Majority
+  )
+
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test54 #goal is to combine the Epithelium and Germ cells
+  COMMAND JoinMasks
+  ${TEMP}/ernou_tor5564m12_classified_labels_epithelium.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_germ_cells.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_Epithelium_GermCells.png
+  )
+
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test53
+  COMMAND JoinMasks
+  ${TEMP}/ernou_tor5564m12_classified_labels_mature_cells.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_germ_cells.png
+  ${TEMP}/ernou_tor5564m12_classified_labels_ALLCells.png
+  )
+
+ExternalData_Add_Test( UNCTissueData
   NAME Test52
   COMMAND ConnectedComponentsImageFilter
   ${TEMP}/ernou_tor5564m12_classified_labels_tubules_and_ephitelium_mask_voting.png

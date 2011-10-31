@@ -33,3 +33,30 @@ target_link_libraries( VotingBinaryIterativeHoleFillingImageFilter ${ITK_LIBRARI
 
 add_executable( ConnectedComponentsImageFilter  ConnectedComponentsImageFilter.cxx )
 target_link_libraries( ConnectedComponentsImageFilter ${ITK_LIBRARIES} )
+
+add_executable( HoughTransform2DCirclesImageFilter  HoughTransform2DCirclesImageFilter.cxx )
+target_link_libraries( HoughTransform2DCirclesImageFilter ${ITK_LIBRARIES} )
+
+add_executable( JoinMasks  JoinMasks.cxx )
+target_link_libraries( JoinMasks ${ITK_LIBRARIES} )
+
+add_executable( WatershedSegmentation  WatershedSegmentation.cxx )
+target_link_libraries( WatershedSegmentation ${ITK_LIBRARIES} )
+
+add_executable( SignedDanielssonDistanceMapImageFilter   SignedDanielssonDistanceMapImageFilter.cxx )
+target_link_libraries( SignedDanielssonDistanceMapImageFilter ${ITK_LIBRARIES} )
+
+add_executable( ApproximateSignedDistanceMapImageFilter   ApproximateSignedDistanceMapImageFilter.cxx )
+target_link_libraries( ApproximateSignedDistanceMapImageFilter ${ITK_LIBRARIES} )
+
+add_executable( InvertFilter   InvertFilter.cxx )
+target_link_libraries( InvertFilter ${ITK_LIBRARIES} )
+
+
+
+
+
+
+
+
+
