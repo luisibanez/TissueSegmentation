@@ -46,6 +46,9 @@ target_link_libraries( WatershedSegmentation ${ITK_LIBRARIES} )
 add_executable( SignedDanielssonDistanceMapImageFilter   SignedDanielssonDistanceMapImageFilter.cxx )
 target_link_libraries( SignedDanielssonDistanceMapImageFilter ${ITK_LIBRARIES} )
 
+add_executable( SignedMaurerDistanceMapImageFilter   SignedMaurerDistanceMapImageFilter.cxx )
+target_link_libraries( SignedMaurerDistanceMapImageFilter ${ITK_LIBRARIES} )
+
 add_executable( ApproximateSignedDistanceMapImageFilter   ApproximateSignedDistanceMapImageFilter.cxx )
 target_link_libraries( ApproximateSignedDistanceMapImageFilter ${ITK_LIBRARIES} )
 
