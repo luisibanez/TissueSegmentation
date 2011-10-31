@@ -148,6 +148,7 @@ int main( int argc, char *argv[] )
     }
 
   typedef itk::Image< unsigned short, 2 > SmallLabelImageType;
+//  typedef itk::Image< LabeledImageType::PixelType, 2 > SmallLabelImageType;
   typedef itk::RelabelComponentImageFilter< LabeledImageType, SmallLabelImageType > RelabelFilterType;
 
   RelabelFilterType::Pointer relabeler = RelabelFilterType::New();
@@ -155,6 +156,8 @@ int main( int argc, char *argv[] )
   relabeler->SetInput( watershedFilter->GetOutput() );
 
   typedef std::vector< itk::SizeValueType > SizesInPixelsType;
+
+  relabeler->Update();
 
   const SizesInPixelsType &  sizesInPixels = relabeler->GetSizeOfObjectsInPixels();
 
