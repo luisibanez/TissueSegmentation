@@ -28,11 +28,11 @@
 int main(int argc, char * argv [])
 {
 
-  if( argc < 5 )
+  if( argc < 6 )
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage  outputImage number_of_pixels_threshold_high number_of_pixels_threshold_low " << std::endl;
+    std::cerr << " inputImage  outputImage number_of_pixels_threshold_high number_of_pixels_threshold_low roundness_threshold" << std::endl;
     return EXIT_FAILURE;
     }
 
@@ -52,8 +52,10 @@ int main(int argc, char * argv [])
 
   // Remove label objects that have NUMBER_OF_PIXELS less than command line argument.
   typedef itk::ShapeOpeningLabelMapFilter< LabelImageToShapeLabelMapFilterType::OutputImageType > ShapeOpeningLabelMapFilterType;
+
   ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter1 = ShapeOpeningLabelMapFilterType::New();
   ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter2 = ShapeOpeningLabelMapFilterType::New();
+  ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter3 = ShapeOpeningLabelMapFilterType::New();
 
   shapeOpeningLabelMapFilter1->SetInput( binaryImageToShapeLabelMapFilter->GetOutput() );
   shapeOpeningLabelMapFilter1->SetLambda( atoi( argv[3] ) );
@@ -67,10 +69,17 @@ int main(int argc, char * argv [])
   shapeOpeningLabelMapFilter2->SetAttribute( ShapeOpeningLabelMapFilterType::LabelObjectType::NUMBER_OF_PIXELS);
   shapeOpeningLabelMapFilter2->Update();
 
+  shapeOpeningLabelMapFilter3->SetInput( shapeOpeningLabelMapFilter2->GetOutput() );
+  shapeOpeningLabelMapFilter3->SetLambda( atoi( argv[5] ) );
+  shapeOpeningLabelMapFilter3->ReverseOrderingOff();
+  shapeOpeningLabelMapFilter3->SetAttribute( ShapeOpeningLabelMapFilterType::LabelObjectType::ROUNDNESS);
+  shapeOpeningLabelMapFilter3->Update();
+
+
   // Create a label image
   typedef itk::LabelMapToLabelImageFilter<LabelImageToShapeLabelMapFilterType::OutputImageType, LabelImageType> LabelMapToLabelImageFilterType;
   LabelMapToLabelImageFilterType::Pointer labelMapToLabelImageFilter = LabelMapToLabelImageFilterType::New();
-  labelMapToLabelImageFilter->SetInput(shapeOpeningLabelMapFilter2->GetOutput());
+  labelMapToLabelImageFilter->SetInput(shapeOpeningLabelMapFilter3->GetOutput());
   labelMapToLabelImageFilter->Update();
 
   typedef itk::RGBPixel<unsigned char>   RGBPixelType;
