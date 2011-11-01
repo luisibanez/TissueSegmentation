@@ -98,8 +98,10 @@ int main(int argc, char * argv[])
     /*
     std::cout << "    BoundingBox: "
               << labelObject->GetBoundingBox() << std::endl;
+    */
     std::cout << "    NumberOfPixels: "
               << labelObject->GetNumberOfPixels() << std::endl;
+    /* 
     std::cout << "    PhysicalSize: "
               << labelObject->GetPhysicalSize() << std::endl;
     std::cout << "    Centroid: "
@@ -114,11 +116,17 @@ int main(int argc, char * argv[])
               << labelObject->GetPrincipalMoments() << std::endl;
     std::cout << "    PrincipalAxes: "
               << labelObject->GetPrincipalAxes() << std::endl;
+    */
+
     std::cout << "    Elongation: "
               << labelObject->GetElongation() << std::endl;
+
+    /*
     std::cout << "    Perimeter: "
               << labelObject->GetPerimeter() << std::endl;
+
     */
+
     std::cout << "    Roundness: "
               << labelObject->GetRoundness() << std::endl;
 

@@ -20,4 +20,6 @@ MAJORITY=1
 
 ./bin/ShapeOpeningLabelMapFilter \
   invertedMaskDistanceMapMaurer9_Watershed_Labels_3.mha \
-  detectedTubules.png 60000 10000 0.97
+  detectedTubules.png 63000 10000 0.54
+
+

@@ -70,7 +70,7 @@ int main(int argc, char * argv [])
   shapeOpeningLabelMapFilter2->Update();
 
   shapeOpeningLabelMapFilter3->SetInput( shapeOpeningLabelMapFilter2->GetOutput() );
-  shapeOpeningLabelMapFilter3->SetLambda( atoi( argv[5] ) );
+  shapeOpeningLabelMapFilter3->SetLambda( atof( argv[5] ) );
   shapeOpeningLabelMapFilter3->ReverseOrderingOff();
   shapeOpeningLabelMapFilter3->SetAttribute( ShapeOpeningLabelMapFilterType::LabelObjectType::ROUNDNESS);
   shapeOpeningLabelMapFilter3->Update();
