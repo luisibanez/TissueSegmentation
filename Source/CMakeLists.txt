@@ -58,5 +58,10 @@ target_link_libraries( InvertFilter ${ITK_LIBRARIES} )
 add_executable( ShapeOpeningLabelMapFilter   ShapeOpeningLabelMapFilter.cxx )
 target_link_libraries( ShapeOpeningLabelMapFilter ${ITK_LIBRARIES} )
 
+add_executable( ShapeLabelObjectAccessors   ShapeLabelObjectAccessors.cxx )
+target_link_libraries( ShapeLabelObjectAccessors ${ITK_LIBRARIES} )
+
+
+
 
 

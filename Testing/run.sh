@@ -1,6 +1,6 @@
 #!/bin/bash
 MAJORITY=1
- ./bin/VotingBinaryHoleFillingImageFilter ~/Downloads/invertedMask.png      /tmp/invertedMaskHoleFilled1.png 255 0 2 ${MAJORITY}
+ ./bin/VotingBinaryHoleFillingImageFilter ./invertedMask.png      /tmp/invertedMaskHoleFilled1.png 255 0 2 ${MAJORITY}
  ./bin/VotingBinaryHoleFillingImageFilter /tmp/invertedMaskHoleFilled1.png  /tmp/invertedMaskHoleFilled2.png 255 0 2 ${MAJORITY}
  ./bin/VotingBinaryHoleFillingImageFilter /tmp/invertedMaskHoleFilled2.png  /tmp/invertedMaskHoleFilled3.png 255 0 2 ${MAJORITY}
  ./bin/VotingBinaryHoleFillingImageFilter /tmp/invertedMaskHoleFilled3.png  /tmp/invertedMaskHoleFilled4.png 255 0 2 ${MAJORITY}
@@ -18,3 +18,6 @@ MAJORITY=1
     /tmp/invertedMaskDistanceMapMaurer9_Watershed_Labels_3.mha \
     0.01 0.3
 
+./bin/ShapeOpeningLabelMapFilter \
+  invertedMaskDistanceMapMaurer9_Watershed_Labels_3.mha \
+  detectedTubules.png 60000 10000 0.97

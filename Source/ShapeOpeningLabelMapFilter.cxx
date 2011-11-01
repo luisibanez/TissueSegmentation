@@ -93,6 +93,7 @@ int main(int argc, char * argv [])
   colormapImageFilter->Update();
 
   // Write the output
+
   typedef itk::ImageFileWriter< RGBImageType > WriterType;
   WriterType::Pointer writer = WriterType::New();
   writer->SetInput( colormapImageFilter->GetOutput() );
