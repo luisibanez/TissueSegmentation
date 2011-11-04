@@ -24,25 +24,29 @@
 #include "itkShapeOpeningLabelMapFilter.h"
 #include "itkLabelMapToLabelImageFilter.h"
 #include "itkScalarToRGBColormapImageFilter.h"
+#include "itkLabelMapOverlayImageFilter.h"
+
 
 int main(int argc, char * argv [])
 {
 
-  if( argc < 6 )
+  if( argc < 7 )
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage  outputImage number_of_pixels_threshold_high number_of_pixels_threshold_low roundness_threshold" << std::endl;
+    std::cerr << "\t input_image_orignal_gray_level_image";
+    std::cerr << "\t input_Image_label_image  outputImage number_of_pixels_threshold_high";
+    std::cerr << "\t number_of_pixels_threshold_low roundness_threshold" << std::endl;
     return EXIT_FAILURE;
     }
 
   typedef itk::Image<unsigned short, 2>  ImageType;
   typedef itk::Image<unsigned short, 2>  LabelImageType;
 
+  //First read the input image label image
   typedef  itk::ImageFileReader< ImageType   >  ReaderType;
-
   ReaderType::Pointer reader = ReaderType::New();
-  reader->SetFileName( argv[1] );
+  reader->SetFileName( argv[2] );
 
   // Create a ShapeLabelMap from the image
   typedef itk::LabelImageToShapeLabelMapFilter<ImageType> LabelImageToShapeLabelMapFilterType;
@@ -58,46 +62,43 @@ int main(int argc, char * argv [])
   ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter3 = ShapeOpeningLabelMapFilterType::New();
 
   shapeOpeningLabelMapFilter1->SetInput( binaryImageToShapeLabelMapFilter->GetOutput() );
-  shapeOpeningLabelMapFilter1->SetLambda( atoi( argv[3] ) );
+  shapeOpeningLabelMapFilter1->SetLambda( atoi( argv[4] ) );
   shapeOpeningLabelMapFilter1->ReverseOrderingOn();
   shapeOpeningLabelMapFilter1->SetAttribute( ShapeOpeningLabelMapFilterType::LabelObjectType::NUMBER_OF_PIXELS);
   shapeOpeningLabelMapFilter1->Update();
 
   shapeOpeningLabelMapFilter2->SetInput( shapeOpeningLabelMapFilter1->GetOutput() );
-  shapeOpeningLabelMapFilter2->SetLambda( atoi( argv[4] ) );
+  shapeOpeningLabelMapFilter2->SetLambda( atoi( argv[5] ) );
   shapeOpeningLabelMapFilter2->ReverseOrderingOff();
   shapeOpeningLabelMapFilter2->SetAttribute( ShapeOpeningLabelMapFilterType::LabelObjectType::NUMBER_OF_PIXELS);
   shapeOpeningLabelMapFilter2->Update();
 
   shapeOpeningLabelMapFilter3->SetInput( shapeOpeningLabelMapFilter2->GetOutput() );
-  shapeOpeningLabelMapFilter3->SetLambda( atof( argv[5] ) );
+  shapeOpeningLabelMapFilter3->SetLambda( atof( argv[6] ) );
   shapeOpeningLabelMapFilter3->ReverseOrderingOff();
   shapeOpeningLabelMapFilter3->SetAttribute( ShapeOpeningLabelMapFilterType::LabelObjectType::ROUNDNESS);
   shapeOpeningLabelMapFilter3->Update();
 
-
-  // Create a label image
-  typedef itk::LabelMapToLabelImageFilter<LabelImageToShapeLabelMapFilterType::OutputImageType, LabelImageType> LabelMapToLabelImageFilterType;
-  LabelMapToLabelImageFilterType::Pointer labelMapToLabelImageFilter = LabelMapToLabelImageFilterType::New();
-  labelMapToLabelImageFilter->SetInput(shapeOpeningLabelMapFilter3->GetOutput());
-  labelMapToLabelImageFilter->Update();
-
   typedef itk::RGBPixel<unsigned char>   RGBPixelType;
   typedef itk::Image<RGBPixelType, 2>    RGBImageType;
 
-  // Color each label/object a different color
-  typedef itk::ScalarToRGBColormapImageFilter<LabelImageType, RGBImageType> RGBFilterType;
-  RGBFilterType::Pointer colormapImageFilter = RGBFilterType::New();
-  colormapImageFilter->SetInput(labelMapToLabelImageFilter->GetOutput());
-  colormapImageFilter->SetColormap( RGBFilterType::Jet );
-  colormapImageFilter->Update();
+  //Generate overlay image
+  ReaderType::Pointer originalImageReader = ReaderType::New();
+  originalImageReader->SetFileName( argv[1] );
+  originalImageReader->Update();
 
-  // Write the output
-
-  typedef itk::ImageFileWriter< RGBImageType > WriterType;
+  typedef itk::LabelMapOverlayImageFilter<ShapeOpeningLabelMapFilterType::OutputImageType, ImageType, RGBImageType>
+                                       LabelMapOverlayImageFilterType;
+  LabelMapOverlayImageFilterType::Pointer labelMapOverlayImageFilter = LabelMapOverlayImageFilterType::New();
+  labelMapOverlayImageFilter->SetInput(shapeOpeningLabelMapFilter3->GetOutput());
+  labelMapOverlayImageFilter->SetFeatureImage(originalImageReader->GetOutput());
+  labelMapOverlayImageFilter->SetOpacity(.5);
+  labelMapOverlayImageFilter->Update();
+ 
+  typedef  itk::ImageFileWriter< RGBImageType  > WriterType;
   WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( colormapImageFilter->GetOutput() );
-  writer->SetFileName( argv[2] );
+  writer->SetFileName( argv[3] );
+  writer->SetInput(labelMapOverlayImageFilter->GetOutput());
   writer->Update();
 
   return EXIT_SUCCESS;
