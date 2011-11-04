@@ -500,14 +500,40 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test57  # goal = apply watershed segmentation to segment the tubules
-  COMMAND SignedDanielssonDistanceMapImageFilter
+  NAME Test57  # goal = invert the outer region 
+  COMMAND InvertFilter
+  ${TEMP}/ernou_tor5564m12_outer.png
+  ${TEMP}/ernou_tor5564m12_outer_inverted.png
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test58  # goal = Remove the outer foreground region by masking it out 
+  COMMAND AndImageFilter
+  ${TEMP}/ernou_tor5564m12_outer_inverted.png
   ${TEMP}/ernou_tor5564m12_MaskHoleFilled.png
+  ${TEMP}/ernou_tor5564m12_MaskHoleFilled_OuterForegroundRemoved.png
+  )
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test59  # goal = Remove noise pixels in the background close to the boundary
+  COMMAND BinaryMorphologicalOpeningImageFilter
+  ${TEMP}/ernou_tor5564m12_MaskHoleFilled_OuterForegroundRemoved.png
+  ${TEMP}/ernou_tor5564m12_MaskHoleFilled_OuterForegroundRemoved_Cleaned.png
+  2   # Radius
+  0   # Background
+  255 # Foreground
+  )
+
+
+ExternalData_Add_Test( UNCTissueData
+  NAME Test60  # goal = apply watershed segmentation to segment the tubules
+  COMMAND SignedMaurerDistanceMapImageFilter
+  ${TEMP}/ernou_tor5564m12_MaskHoleFilled_OuterForegroundRemoved_Cleaned.png
   ${TEMP}/ernou_tor5564m12_DistanceMap.png
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test58  # goal = apply watershed segmentation to segment the tubules
+  NAME Test61  # goal = apply watershed segmentation to segment the tubules
   COMMAND WatershedSegmentation
   ${TEMP}/ernou_tor5564m12_DistanceMap.png
   ${TEMP}/ernou_tor5564m12_Gradient.mha
@@ -518,12 +544,12 @@ ExternalData_Add_Test( UNCTissueData
   )
 
 ExternalData_Add_Test( UNCTissueData
-  NAME Test59  # goal = geometrical shape analysis to identify the tubules
+  NAME Test62  # goal = geometrical shape analysis to identify the tubules
   COMMAND ShapeOpeningLabelMapFilter
-  ${TEMP}/ernou_tor5564m12_Watershed_Label.png
+  ${TEMP}/ernou_tor5564m12_Watershed_Labels.mha
   ${TEMP}/ernou_tor5564m12_detectedTubules.png
   78000 
-  1000
+  10000
   0.45
   )
 

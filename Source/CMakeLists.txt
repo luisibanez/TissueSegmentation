@@ -61,6 +61,20 @@ target_link_libraries( ShapeOpeningLabelMapFilter ${ITK_LIBRARIES} )
 add_executable( ShapeLabelObjectAccessors   ShapeLabelObjectAccessors.cxx )
 target_link_libraries( ShapeLabelObjectAccessors ${ITK_LIBRARIES} )
 
+add_executable( BinaryGrindPeakImageFilter   BinaryGrindPeakImageFilter.cxx )
+target_link_libraries( BinaryGrindPeakImageFilter ${ITK_LIBRARIES} )
+
+add_executable( AndImageFilter  AndImageFilter.cxx )
+target_link_libraries( AndImageFilter ${ITK_LIBRARIES} )
+
+add_executable( BinaryMorphologicalOpeningImageFilter  BinaryMorphologicalOpeningImageFilter.cxx )
+target_link_libraries( BinaryMorphologicalOpeningImageFilter ${ITK_LIBRARIES} )
+
+
+
+
+
+
 
 
 
