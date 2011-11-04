@@ -71,7 +71,7 @@ int main( int argc, char * argv[] )
   InputPixelType lowerThreshold = labelValue;
   InputPixelType upperThreshold;
 
-  if ( argc >= 4 )
+  if ( argc > 4 )
     {
     upperThreshold = atoi( argv[4] );
     }
@@ -80,8 +80,8 @@ int main( int argc, char * argv[] )
     upperThreshold = labelValue;
     }
 
-  std::cout << "Labels to extract = " << "[" << lowerThreshold 
-                                      << "]" << upperThreshold << std::endl;
+  std::cout << "Labels to extract = " << "[" << itk::NumericTraits<InputPixelType>::PrintType( lowerThreshold ) 
+                                      << "," << itk::NumericTraits<InputPixelType>::PrintType( upperThreshold )  << "]" << std::endl;
 
   filter->SetLowerThreshold( lowerThreshold );
   filter->SetUpperThreshold( upperThreshold );
