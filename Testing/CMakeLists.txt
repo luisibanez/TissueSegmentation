@@ -532,6 +532,17 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou_tor5564m12_DistanceMap.png
   )
 
+#ExternalData_Add_Test( UNCTissueData
+#  NAME Test61  # goal = apply watershed segmentation to segment the tubules
+#  COMMAND WatershedSegmentation
+#  ${TEMP}/ernou_tor5564m12_DistanceMap.png
+#  ${TEMP}/ernou_tor5564m12_Gradient.mha
+#  ${TEMP}/ernou_tor5564m12_Watershed_Color.png
+#  ${TEMP}/ernou_tor5564m12_Watershed_Labels.mha
+#  0.01
+#  0.3
+#  )
+
 ExternalData_Add_Test( UNCTissueData
   NAME Test61  # goal = apply watershed segmentation to segment the tubules
   COMMAND WatershedSegmentation
@@ -539,13 +550,13 @@ ExternalData_Add_Test( UNCTissueData
   ${TEMP}/ernou_tor5564m12_Gradient.mha
   ${TEMP}/ernou_tor5564m12_Watershed_Color.png
   ${TEMP}/ernou_tor5564m12_Watershed_Labels.mha
-  0.01
-  0.3
   )
+
 
 ExternalData_Add_Test( UNCTissueData
   NAME Test62  # goal = geometrical shape analysis to identify the tubules
   COMMAND ShapeOpeningLabelMapFilter
+  DATA{ernou.tor5564m12.tif}
   ${TEMP}/ernou_tor5564m12_Watershed_Labels.mha
   ${TEMP}/ernou_tor5564m12_detectedTubules.png
   78000 
